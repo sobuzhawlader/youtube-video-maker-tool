@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<link rel="icon" href="data:,">
+<title>YouTube Video Maker Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f6f4;--surface:#fff;--surface2:#f0efe9;--ink:#111111;--muted:#5c5c58;--line:#e2e0d8;--red:#ff0033;--red-d:#d9002a;--black:#111;--yellow:#ffd60a;--teal:#0f766e;--green:#15803d;--radius:18px;--shadow:0 10px 30px rgba(0,0,0,.08)}
+@media(prefers-color-scheme:dark){:root{--bg:#0f0f0f;--surface:#1a1a1a;--surface2:#242424;--ink:#f5f5f2;--muted:#a8a8a0;--line:#2e2e2e;--shadow:0 10px 30px rgba(0,0,0,.35)}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.55}
+a{color:inherit}button,input,select,textarea{font:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 18px 56px}
+.hero{background:var(--black);color:#fff;border-radius:24px;padding:28px 24px 22px;overflow:hidden;position:relative}
+.hero h1{font-family:Archivo,sans-serif;font-weight:900;font-size:clamp(32px,6vw,58px);line-height:.95;letter-spacing:-.02em;margin:10px 0 12px;max-width:720px}
+.hero h1 span{color:var(--yellow)}
+.hero p{color:#d6d6d0;max-width:680px;margin:0;font-size:16px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:#222;border:1px solid #333;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.dot{width:9px;height:9px;background:var(--red);border-radius:50%;display:inline-block}
+.play{width:44px;height:44px;background:var(--red);border-radius:12px;display:grid;place-items:center;font-size:20px}
+.hero-top{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.flow{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.flow div{background:#1e1e1e;border:1px solid #2d2d2d;border-radius:999px;padding:8px 11px;font-size:13px;font-weight:600}
+.flow b{color:var(--yellow)}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.stat strong{font-family:Archivo;font-size:22px;display:block;line-height:1}
+.stat span{color:var(--muted);font-size:13px}
+.nav{position:sticky;top:10px;z-index:20;display:flex;gap:8px;overflow:auto;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:999px;margin:16px 0;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{text-decoration:none;white-space:nowrap;padding:9px 13px;border-radius:999px;font-weight:700;font-size:13px;background:var(--surface2)}
+.nav a:first-child{background:var(--ink);color:var(--bg)}
+.grid2{display:grid;grid-template-columns:1.08fr .92fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card h2{font-family:Archivo;font-size:26px;line-height:1.05;margin:0 0 6px;letter-spacing:-.02em}
+.card h3{font-family:Archivo;font-size:18px;margin:18px 0 8px}
+.kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--red)}
+.bn{color:var(--muted);font-size:14px}
+label{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;display:block;margin:14px 0 6px}
+input,select,textarea{width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--red)}
+textarea{min-height:110px;resize:vertical}
+.btn{border:0;cursor:pointer;border-radius:12px;padding:12px 16px;font-weight:800;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:var(--red-d)}
+.btn-dark{background:var(--ink);color:var(--bg)}.btn-ghost{background:var(--surface2);color:var(--ink);border:1px solid var(--line)}
+.btn-yellow{background:var(--yellow);color:#111}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chip{border:1px solid var(--line);background:var(--surface2);padding:7px 10px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer}
+.output{background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:14px;white-space:pre-wrap;font-size:14px;min-height:120px}
+.scriptout{font-family:ui-monospace,monospace;font-size:13.5px;line-height:1.7;max-height:520px;overflow:auto}
+.mono{font-family:"JetBrains Mono",monospace}
+.list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.list li{display:flex;gap:12px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.num{width:30px;height:30px;flex:0 0 30px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:800;font-size:13px}
+.scorebar{height:12px;background:var(--line);border-radius:999px;overflow:hidden}.scorebar i{display:block;height:100%;background:var(--red)}
+.thumb{aspect-ratio:16/9;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;overflow:hidden;position:relative}
+.thumb b{font-family:Archivo;font-weight:900;font-size:clamp(22px,4vw,36px);line-height:.95;text-transform:uppercase;text-shadow:0 3px 0 rgba(0,0,0,.35)}
+.thumb small{font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.t-red{background:linear-gradient(135deg,#ff0033,#7f001a)} .t-black{background:linear-gradient(135deg,#111,#333)} .t-yellow{background:linear-gradient(135deg,#ffd60a,#ff8a00);color:#111}.t-yellow b{text-shadow:none}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+details{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface2)}details+details{margin-top:8px}summary{font-weight:800;cursor:pointer}
+input[type=range]{padding:0}
+.big{font-family:Archivo;font-size:34px;line-height:1}
+.verdict{padding:14px;border-radius:12px;font-weight:700}
+.win{background:#dcfce7;color:#14532d}.lose{background:#fee2e2;color:#7f1d1d}
+@media(prefers-color-scheme:dark){.win{background:#14532d;color:#dcfce7}.lose{background:#450a0a;color:#fecaca}}
+.foot{color:var(--muted);font-size:13px;text-align:center;margin-top:24px}
+@media(max-width:820px){.grid2,.grid3,.quick{grid-template-columns:1fr}.hero{padding:22px 18px}.card{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-top"><div class="play">▶</div><span class="badge"><span class="dot"></span> Faceless • English • SEO + AI Tools</span></div>
+    <h1>Make the video<br>before you <span>open 10 channels.</span></h1>
+    <p>Idea, script, title A/B test, thumbnail, SEO pack and publish plan — all in one workflow, so you can prove the format on your first channel before copying the winner to other channels.</p>
+    <div class="flow"><div><b>01</b> Idea</div><div><b>02</b> Script</div><div><b>03</b> Title A/B</div><div><b>04</b> Thumbnail</div><div><b>05</b> SEO Pack</div><div><b>06</b> Test &amp; Publish</div></div>
+  </header>
+
+  <div class="quick">
+    <div class="stat"><strong>8–15 min</strong><span>Best length — for tutorials</span></div>
+    <div class="stat"><strong>1 channel first</strong><span>Test 20 videos in 90 days first, then go multi-channel</span></div>
+    <div class="stat"><strong>$4–$11 RPM*</strong><span>Estimated range for the SEO + AI niche, not a guarantee</span></div>
+  </div>
+
+  <nav class="nav"><a href="#builder">🎬 Video Builder</a><a href="#titles">Title A/B Test</a><a href="#thumb">Thumbnail</a><a href="#seo">SEO Pack</a><a href="#channels">Channel A/B Plan</a><a href="#money">Earnings</a><a href="#checklist">Checklist</a></nav>
+
+  <!-- BUILDER -->
+  <section id="builder" class="grid2">
+    <div class="card">
+      <div class="kicker">Step 1–2 • Idea + Script</div><h2>Video Builder</h2>
+      <p class="bn">Enter a topic and the tool builds the full script structure — hook, chapters, and exactly what to show on screen.</p>
+      <label>Video topic</label>
+      <input id="topic" value="SEO Tutorial for Beginners — How to Rank on Google Step by Step">
+      <div class="row"><div><label>Niche</label><select id="niche"><option value="seo">SEO + AI Tools ⭐ Recommended</option><option value="ai">AI Tools only</option><option value="web">WordPress / Websites</option><option value="finance">Make Money / Finance</option><option value="animation">Animation / Cartoon</option></select></div>
+      <div><label>Audience</label><select id="audience"><option>Complete beginners (US/UK)</option><option>Beginners in India / Bangladesh</option><option>Small business owners</option><option>Freelancers & creators</option></select></div></div>
+      <div class="row"><div><label>Length: <span id="minLabel">12</span> minutes</label><input type="range" id="minutes" min="5" max="20" value="12"></div><div><label>Style</label><select id="style"><option>Faceless screen recording + voiceover</option><option>Faceless + animated B-roll</option><option>Talking head + screen</option></select></div></div>
+      <label>Which idea will you start with?</label>
+      <div class="chips" id="ideaChips"></div>
+      <div class="row" style="margin-top:16px"><button class="btn btn-red" onclick="generateScript()">✦ Generate Full Script</button><button class="btn btn-ghost" onclick="randomIdea()">🎲 Random Idea</button></div>
+      <h3>Production plan for this video</h3>
+      <ul class="list">
+        <li><span class="num">1</span><div><b>Record screen, not face.</b><br><span class="bn">Show the real screens — Google, Search Console, and the actual tools. That is where credibility comes from.</span></div></li>
+        <li><span class="num">2</span><div><b>Voiceover at 140–150 words/min.</b><br><span class="bn">12 minutes ≈ 1,750 words. Read slowly in clear English.</span></div></li>
+        <li><span class="num">3</span><div><b>First 30 seconds = promise.</b><br><span class="bn">Show the result first, then teach it step by step.</span></div></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="kicker">Your script • Copy and use</div><h2>Script Output</h2>
+      <div id="scriptOut" class="output scriptout">Your full script will appear here after you click Generate…</div>
+      <div class="row" style="margin-top:12px"><button class="btn btn-dark" onclick="copyText('scriptOut')">📋 Copy Script</button><button class="btn btn-ghost" onclick="downloadScript()">⬇ Download .txt</button></div>
+      <p class="bn" style="margin-top:10px">⚠️ Don't read the script word-for-word — add your own examples, your own website screens, and your own results. YouTube blocks monetization for reused / AI-spam content.</p>
+    </div>
+  </section>
+
+  <!-- TITLES AB -->
+  <section id="titles" class="card" style="margin-top:16px">
+    <div class="kicker">Step 3 • A/B Testing</div><h2>Title Lab — Which Title Will Win?</h2>
+    <p class="bn">Test two titles side by side. The score is not a CTR guarantee, but it shows which title is stronger based on 4 signals: length, numbers, power words, and curiosity. Do the real A/B test on thumbnails with YouTube Studio's “Test &amp; Compare” feature.</p>
+    <div class="row"><button class="btn btn-red" onclick="generateTitles()">Generate 10 Title Variations</button></div>
+    <div id="titleList" class="output" style="margin-top:12px">Variations will appear here…</div>
+    <div class="grid2" style="margin-top:16px">
+      <div><label>Title A</label><input id="titleA" value="SEO Tutorial for Beginners 2026 — Rank #1 on Google (Step by Step)"><div style="margin-top:10px"><div class="scorebar"><i id="barA" style="width:0%"></i></div><p><b id="scoreA" class="big">—</b> /100 &nbsp;<span id="noteA" class="bn"></span></p></div></div>
+      <div><label>Title B</label><input id="titleB" value="How to Rank on Google"><div style="margin-top:10px"><div class="scorebar"><i id="barB" style="width:0%"></i></div><p><b id="scoreB" class="big">—</b> /100 &nbsp;<span id="noteB" class="bn"></span></p></div></div>
+    </div>
+    <button class="btn btn-dark" onclick="compareTitles()">⚖️ Compare A vs B</button>
+    <div id="verdict" class="verdict" style="margin-top:12px;background:var(--surface2)">Click Compare to see the winner.</div>
+  </section>
+
+  <!-- THUMBNAIL -->
+  <section id="thumb" class="card" style="margin-top:16px">
+    <div class="kicker">Step 4 • Thumbnail</div><h2>Thumbnail Preview — Stop the Scroll in 3–4 Words</h2>
+    <div class="row"><div><label>Thumbnail text (max 4 words)</label><input id="thumbText" value="RANK #1 ON GOOGLE" oninput="renderThumbs()"></div><div><label>Small label</label><input id="thumbSub" value="SEO • 2026 • Beginner" oninput="renderThumbs()"></div></div>
+    <div class="grid3" style="margin-top:14px">
+      <div><div class="thumb t-red"><small class="tsub"></small><b class="ttext"></b></div><p class="bn" style="text-align:center">A — Red / Bold (Best for tutorials)</p></div>
+      <div><div class="thumb t-black"><small class="tsub"></small><b class="ttext"></b></div><p class="bn" style="text-align:center">B — Black / Clean</p></div>
+      <div><div class="thumb t-yellow"><small class="tsub"></small><b class="ttext"></b></div><p class="bn" style="text-align:center">C — Yellow / High contrast</p></div>
+    </div>
+    <p class="bn">Rules: Big text that's readable on mobile, one face / arrow / before-after result, no more than 3 colors. Upload all 3 designs to YouTube Studio and run Test &amp; Compare — YouTube will pick the winner within 2 weeks.</p>
+  </section>
+
+  <!-- SEO PACK -->
+  <section id="seo" class="grid2" style="margin-top:16px">
+    <div class="card"><div class="kicker">Step 5 • SEO Pack</div><h2>Description + Tags Generator</h2>
+      <label>Main keyword</label><input id="keyword" value="seo tutorial for beginners">
+      <label>Affiliate / link (optional — SetupNest, tool link)</label><input id="afflink" placeholder="https://…">
+      <button class="btn btn-red" style="margin-top:14px" onclick="generateSEO()">Generate SEO Pack</button>
+      <p class="bn">The first 2 lines of the description must include the keyword + the result promise — that's all that shows first in search.</p>
+    </div>
+    <div class="card"><h2>Ready to paste</h2><div id="seoOut" class="output">Click Generate…</div><button class="btn btn-dark" style="margin-top:12px" onclick="copyText('seoOut')">📋 Copy SEO Pack</button></div>
+  </section>
+
+  <!-- CHANNELS AB -->
+  <section id="channels" class="card" style="margin-top:16px">
+    <div class="kicker">Step 6 • Multi-channel A/B Strategy</div><h2>Start With 1, Scale Later — Testing Plan</h2>
+    <p class="bn">If you launch 5 channels at once, your time gets split 5 ways and none of them will take off. The right way: Prove the format on <b>Channel A over 90 days / 20–25 videos</b>, then launch B and C with the winning format.</p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Channel</th><th>Niche / Angle</th><th>Format</th><th>Frequency</th><th>Test question — What do you want to learn?</th><th>Kill / Scale rule</th></tr></thead><tbody>
+      <tr><td><b>A — Main ⭐</b></td><td><input value="SEO + AI Tools (English)"></td><td>Faceless tutorial 8–15 min</td><td>2 / week</td><td>Do SEO tutorials get 4%+ CTR and 40%+ retention?</td><td>Decide after 20 videos</td></tr>
+      <tr><td><b>B — Test</b></td><td><input value="AI Tools Shorts + Long"></td><td>60s Shorts → long video</td><td>3 Shorts / week</td><td>Do viewers move from Shorts to long videos?</td><td>Close if subs don't grow</td></tr>
+      <tr><td><b>C — Later</b></td><td><input value="Animation / Story (only if A wins)"></td><td>Animated explainer</td><td>1 / week</td><td>Does the same topic earn more RPM in animation?</td><td>Start only if A succeeds</td></tr>
+    </tbody></table></div>
+    <div class="grid3" style="margin-top:14px"><div class="stat"><strong>CTR</strong><span>4–6% = Good • Below that, change title / thumbnail</span></div><div class="stat"><strong>Retention</strong><span>40%+ = Good • Lower means a weak hook</span></div><div class="stat"><strong>RPM</strong><span>Compare by niche, not by views</span></div></div>
+  </section>
+
+  <!-- MONEY -->
+  <section id="money" class="grid2" style="margin-top:16px">
+    <div class="card"><div class="kicker">Reality Check</div><h2>Earnings Estimator</h2>
+      <label>Monthly views: <b id="viewsLabel">100,000</b></label><input type="range" id="views" min="10000" max="1000000" step="10000" value="100000">
+      <label>Niche RPM (per 1,000 views)</label><select id="rpmSel"><option value="7.5">SEO + AI Tools — $4–$11 (mid $7.50)</option><option value="6">AI Tools — $3–$9 (mid $6)</option><option value="17.5">Finance — $10–$25 (mid $17.50)</option><option value="4.5">Animation (adult) — $2–$7 (mid $4.50)</option><option value="0.33">Kids cartoon — ~$0.33 ⚠️ lowest</option></select>
+      <p class="bn">*These are third-party estimates, not YouTube's official rates. Actual RPM varies by country, season, and audience. Monetization requires 1,000 subs + 4,000 watch hours (or 10M views on Shorts).</p>
+    </div>
+    <div class="card"><h2>Estimated monthly income</h2><p class="big" id="earnOut">$750</p><p class="bn" id="earnNote"></p><details><summary>How does the money reach Bangladesh?</summary><p class="bn">AdSense → Directly to your bank account (wire transfer, paid once you reach $100). Payoneer is needed for affiliate income (Amazon, etc.), not for AdSense.</p></details><details><summary>Why do cartoons earn less despite more views?</summary><p class="bn">Personalized ads are disabled on kids' content, and advertisers pay less. So even 1 million views can earn less than 100K views on an SEO video.</p></details></div>
+  </section>
+
+  <!-- CHECKLIST + EXPORT -->
+  <section id="checklist" class="grid2" style="margin-top:16px">
+    <div class="card"><div class="kicker">Before Publish</div><h2>Publish Checklist</h2><ul class="list">
+      <li><span class="num">✓</span><div><b>Title</b> — Under 60 characters, keyword first, includes a number / year</div></li>
+      <li><span class="num">✓</span><div><b>Thumbnail</b> — 3 versions added to Test &amp; Compare</div></li>
+      <li><span class="num">✓</span><div><b>First 30 sec</b> — Result / proof shown, no long intro</div></li>
+      <li><span class="num">✓</span><div><b>Description</b> — Keyword, timestamps, only 1 main link</div></li>
+      <li><span class="num">✓</span><div><b>End screen + pinned comment</b> — Sends viewers to the next video</div></li>
+      <li><span class="num">✓</span><div><b>Original value</b> — Your own screen, your own examples; no copy / re-upload</div></li>
+    </ul></div>
+    <div class="card"><div class="kicker">Export • Full plan in one file</div><h2>Download Full Video Plan</h2><p class="bn">Script, titles, SEO pack, and channel plan — download it all in one file. Keep one file per video and you'll build your content library.</p><button class="btn btn-yellow" onclick="exportAll()">⬇ Download Full Plan (.txt)</button><div class="row" style="margin-top:10px"><button class="btn btn-ghost" onclick="generateScript();generateTitles();generateSEO();compareTitles()">↻ Refresh Everything</button></div><p class="bn" style="margin-top:12px">Next step: Record your first video using this plan, then 7 days after upload check CTR and retention and test Title B again.</p></div>
+  </section>
+  <p class="foot">YouTube Video Maker Tool — Built for Dewi's first English SEO + AI channel • RPM figures are estimates, not an income guarantee</p>
+</div>
+<script>
+const IDEAS={
+ seo:["SEO Tutorial for Beginners — Rank on Google Step by Step","Keyword Research for Beginners (Free Tools Only)","I Audited 10 Websites — 7 SEO Mistakes Killing Rankings","Google Search Console Tutorial 2026 — Full Guide","On-Page SEO Checklist — Rank Any Page Faster"],
+ ai:["5 Free AI Tools That Replace $500/mo Software","ChatGPT for SEO — 10 Prompts That Actually Work","Best AI Video Tools in 2026 — Honest Test","How to Write Blog Posts With AI (Without Getting Penalized)","This Free AI Tool Finds Keywords in 60 Seconds"],
+ web:["Create a Website in 10 Minutes — No Coding","Best WordPress Plugins for Speed & SEO (2026)","Landing Page Tutorial — Design That Converts","WordPress SEO Setup — Do This First","Free vs Paid Themes — What Actually Matters"],
+ finance:["How Creators Actually Make Money Online in 2026","Passive Income Ideas That Pay to Your Bank Account","Affiliate Marketing for Beginners — First $100","Freelancing vs YouTube vs Blogging — Honest Numbers","5 Online Income Streams, Ranked by Real Effort"],
+ animation:["How Animated Explainers Are Made (Step by Step)","I Made an Animated Video With Free Tools","Animation Mistakes That Kill Watch Time","Faceless Animation Channel — Full Workflow","Storytelling for Animated Videos — Beginner Guide"]
+};
+let curNiche='seo';
+function renderChips(){const c=document.getElementById('ideaChips');c.innerHTML='';IDEAS[curNiche].forEach(t=>{let s=document.createElement('button');s.className='chip';s.textContent=t.length>52?t.slice(0,52)+'…':t;s.title=t;s.onclick=()=>{document.getElementById('topic').value=t;generateScript()};c.appendChild(s)})}
+document.getElementById('niche').addEventListener('change',e=>{curNiche=e.target.value;renderChips()});
+document.getElementById('minutes').addEventListener('input',e=>document.getElementById('minLabel').textContent=e.target.value);
+function randomIdea(){const a=IDEAS[curNiche];document.getElementById('topic').value=a[Math.floor(Math.random()*a.length)];generateScript()}
+function ts(sec){let m=Math.floor(sec/60),s=Math.floor(sec%60);return m+':'+String(s).padStart(2,'0')}
+function generateScript(){
+ const topic=document.getElementById('topic').value.trim()||'SEO Tutorial for Beginners';
+ const mins=+document.getElementById('minutes').value, words=Math.round(mins*148), aud=document.getElementById('audience').value, style=document.getElementById('style').value;
+ const total=mins*60;
+ const secs=[
+  [0.00,"HOOK","\"By the end of this video, you'll know exactly how to do this — step by step, with free tools. No theory, only what I do on screen.\" Show the final result FIRST.","SCREEN: Final result / ranking / dashboard — full screen, zoom in"],
+  [0.06,"THE PROBLEM","Explain the #1 mistake beginners make with this topic and why most tutorials skip it. Keep it under 60 seconds.","SCREEN: Common mistake example, red highlight"],
+  [0.14,"STEP 1 — Setup & Tools","Walk through the exact tools and setup. Name each free tool, show where to click.","SCREEN: Tool homepage → settings, cursor highlights"],
+  [0.34,"STEP 2 — The Core Method","The main process, slowly. One action per sentence. Pause after each click so beginners can follow.","SCREEN: Live demo on a real example site"],
+  [0.58,"STEP 3 — Fix & Optimize","Show what goes wrong, how to check it, and how to fix it. This section earns saves & comments.","SCREEN: Before vs After split view"],
+  [0.78,"REAL EXAMPLE / RESULT","Apply everything to one real example end-to-end. Show numbers, not promises.","SCREEN: Real results table / Search Console data"],
+  [0.90,"MISTAKES + PRO TIPS","3 mistakes to avoid + 1 pro tip most beginners never hear.","SCREEN: Checklist overlay, big text"],
+  [0.96,"OUTRO + NEXT VIDEO","Recap in 2 sentences, ask ONE question in the comments, point to the next video on the end screen.","SCREEN: End screen → next tutorial"]
+ ];
+ let out="VIDEO SCRIPT — "+topic.toUpperCase()+"\n"+"Target: "+aud+"  •  Length: ~"+mins+" min (~"+words.toLocaleString()+" words)  •  Format: "+style+"\n"+"============================================================\n\n";
+ secs.forEach(s=>{out+="["+ts(total*s[0])+" — "+s[1]+"]\nVOICEOVER: "+s[2]+"\n"+s[3]+"\n\n"});
+ out+="CTA (use once, mid-video): \"If this is helping, subscribe — I post one SEO + AI tutorial every week, no fluff.\"\nPINNED COMMENT: \"Which step are you stuck on? Tell me your website type and I'll reply with what to do first.\"";
+ document.getElementById('scriptOut').textContent=out;
+ document.getElementById('keyword').value=topic.split('—')[0].toLowerCase().replace(/[^a-z0-9 ]/g,'').trim()||document.getElementById('keyword').value;
+}
+const POWER=['how','step by step','beginner','free','secret','mistake','fast','actually','proven','complete','ultimate','easy','real','honest','stop','never','2026'];
+function scoreTitle(t){
+ let s=20,notes=[];const low=t.toLowerCase();
+ if(t.length>=35&&t.length<=65){s+=22;notes.push('Good length')}else if(t.length<35){s+=6;notes.push('Title is short — make it more specific')}else{s+=4;notes.push('Title is long — will be cut off on mobile')}
+ if(/\d/.test(t)){s+=14;notes.push('Has a number ✓')}
+ if(low.includes('2026')||low.includes('2025')){s+=9;notes.push('Has a year ✓')}
+ let pw=POWER.filter(w=>low.includes(w)).length;s+=Math.min(22,pw*6);if(pw)notes.push(pw+' power word(s)')
+ if(t.includes('?')){s+=7;notes.push('Question — boosts curiosity')}
+ if(t.includes('(')||t.includes('[')){s+=6;notes.push('Brackets — boosts CTR')}
+ if(t===t.toUpperCase()&&t.length>10){s-=10;notes.push('All caps — looks like spam')}
+ return{score:Math.max(5,Math.min(98,s)),notes:notes.join(' • ')||'Generic title'}
+}
+function generateTitles(){
+ const topic=document.getElementById('topic').value.replace(/—.*$/,'').trim()||'SEO Tutorial for Beginners';
+ const base=topic.charAt(0).toUpperCase()+topic.slice(1);
+ const list=[base+" (Step by Step, 2026)","How to "+base.replace(/^SEO Tutorial/i,'Do SEO')+" — Beginner Guide 2026","I Tried This for 30 Days — Honest Results","7 Mistakes Beginners Make With "+base.split(' ').slice(0,3).join(' '),"The Complete "+base+" in 12 Minutes",base+" — Free Tools Only, No Paid Software","Stop Doing This Wrong — "+base,"What Nobody Tells Beginners About "+base.split(' ').slice(0,4).join(' '),base+": Beginner to Pro Roadmap 2026","How to Get Your First Result With "+base.split(' ').slice(0,3).join(' ')+" (Fast)"];
+ document.getElementById('titleList').textContent=list.map((t,i)=>(i+1)+". "+t+"   ["+scoreTitle(t).score+"/100]").join("\n");
+ document.getElementById('titleA').value=list[0];
+}
+function compareTitles(){
+ const A=scoreTitle(document.getElementById('titleA').value),B=scoreTitle(document.getElementById('titleB').value);
+ document.getElementById('barA').style.width=A.score+'%';document.getElementById('barB').style.width=B.score+'%';
+ document.getElementById('scoreA').textContent=A.score;document.getElementById('scoreB').textContent=B.score;
+ document.getElementById('noteA').textContent=A.notes;document.getElementById('noteB').textContent=B.notes;
+ const v=document.getElementById('verdict');
+ if(A.score===B.score){v.className='verdict';v.style.background='var(--surface2)';v.textContent='🤝 Both are almost equal — test with thumbnails, that\'s what will make the difference.'}
+ else{const w=A.score>B.score?'A':'B';v.className='verdict '+(w?'win':'');v.textContent='🏆 Title '+w+' wins ('+Math.max(A.score,B.score)+' vs '+Math.min(A.score,B.score)+') — Keep this as primary, swap in the other after 7 days and measure CTR again. That\'s the real A/B test.'}
+}
+function renderThumbs(){document.querySelectorAll('.ttext').forEach(e=>e.textContent=document.getElementById('thumbText').value||'YOUR TEXT');document.querySelectorAll('.tsub').forEach(e=>e.textContent=document.getElementById('thumbSub').value)}
+function generateSEO(){
+ const kw=document.getElementById('keyword').value.trim()||'seo tutorial for beginners',topic=document.getElementById('topic').value;
+ const link=document.getElementById('afflink').value.trim();
+ const tags=[kw,kw+' 2026',kw.split(' ')[0]+' tutorial','how to '+kw,'beginner guide','step by step tutorial','learn '+kw.split(' ')[0],'free tools','seo for beginners','ai tools for seo','rank on google','website traffic','digital marketing tutorial'];
+ let d="In this video you learn "+topic+" — step by step, on screen, using free tools. Perfect for complete beginners.\n\n⏱ TIMESTAMPS\n0:00 Result first — what you'll achieve\n0:45 The #1 beginner mistake\n1:40 Step 1 — Setup & free tools\n4:05 Step 2 — The core method\n7:00 Step 3 — Fix & optimize\n9:20 Real example with real numbers\n11:00 Mistakes to avoid + pro tip\n\n🔗 RESOURCES\n"+(link?link+"\n":"(Add your one main link here — tool / SetupNest / next video)\n")+"\n📌 NEXT: Watch the keyword research tutorial next — link on the end screen.\n\n#"+kw.replace(/ /g,'')+" #seo #aitools\n\nTAGS (copy all):\n"+tags.join(', ');
+ document.getElementById('seoOut').textContent=d;
+}
+function calc(){const v=+document.getElementById('views').value,r=+document.getElementById('rpmSel').value;document.getElementById('viewsLabel').textContent=v.toLocaleString();const e=v/1000*r;document.getElementById('earnOut').textContent='$'+e.toLocaleString(undefined,{maximumFractionDigits:0});document.getElementById('earnNote').textContent=v.toLocaleString()+' views × $'+r.toFixed(2)+' RPM ≈ $'+e.toFixed(0)+'/month. The same views in the cartoon niche would earn much less — niche choice wins here.'}
+document.getElementById('views').addEventListener('input',calc);document.getElementById('rpmSel').addEventListener('change',calc);
+function copyText(id){const t=document.getElementById(id).textContent;navigator.clipboard&&navigator.clipboard.writeText(t)}
+function download(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=name;a.click()}
+function downloadScript(){download('video-script.txt',document.getElementById('scriptOut').textContent)}
+function exportAll(){const all="YOUTUBE VIDEO PLAN\nTopic: "+document.getElementById('topic').value+"\n\n--- SCRIPT ---\n"+document.getElementById('scriptOut').textContent+"\n\n--- TITLES ---\n"+document.getElementById('titleList').textContent+"\nA: "+document.getElementById('titleA').value+"\nB: "+document.getElementById('titleB').value+"\n\n--- SEO PACK ---\n"+document.getElementById('seoOut').textContent+"\n\n--- THUMBNAIL ---\nText: "+document.getElementById('thumbText').value+" | Label: "+document.getElementById('thumbSub').value;download('full-video-plan.txt',all)}
+renderChips();renderThumbs();generateScript();generateTitles();generateSEO();compareTitles();calc();
+</script>
+</body>
+</html>
